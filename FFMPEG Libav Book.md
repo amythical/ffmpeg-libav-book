@@ -22,7 +22,7 @@ Thanks to https://github.com/leandromoreira/ffmpeg-libav-tutorial
 * OS Debain
 
 ### Debian Docker instance
-Pull a docker debian instance, 'unstable-slim' is the image I searched and got on the docker repos
+Pull a docker debian instance, 'unstable-slim' is the  debian image I searched and got on the docker repos
 
 ```
 	docker run -it --entrypoint=bash debian:unstable-slim
@@ -279,6 +279,6 @@ trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjUyMjkxMDUwLC0yMDM1ODE4NzUsMTA1Nz
-kzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbLTEyODc3Mjk4MjUsLTIwMzU4MTg3NSwxMD
+U3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
