@@ -280,11 +280,14 @@ trim: trim.c
 ```
 
 # Muxing a video 
-Muxing is keeping the same codec and cha
+Muxing is keeping the same codec and changing the container, does not involve transcoding
 
 ## Mov to mp4
+```
+
+```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk4NTc1Mjk4NywtMjAzNTgxODc1LDEwNT
-c5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OT
+M0NjY1LC0xODI4NTExMzkzXX0=
 -->
