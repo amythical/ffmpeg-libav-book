@@ -16,9 +16,10 @@ Thanks to https://github.com/leandromoreira/ffmpeg-libav-tutorial
 * AVFormatContext ~ Container has AVStreams
 
 # Setup
-## Set up the Environment
+## Environment
 * Mac M1 Sonoma
 * Docker Desktop client
+* OS Debain
 
 ### Debian Docker instance
 Pull a docker debian instance, 'unstable-slim' is the image I searched and got on the docker repos
@@ -278,6 +279,6 @@ trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMzU4MTg3NSwxMDU3OTM0NjY1LC0xOD
-I4NTExMzkzXX0=
+eyJoaXN0b3J5IjpbMjUyMjkxMDUwLC0yMDM1ODE4NzUsMTA1Nz
+kzNDY2NSwtMTgyODUxMTM5M119
 -->
