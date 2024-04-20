@@ -10,9 +10,15 @@ I am recording my findings, code and my experience so it helps me in the future 
 
 #	Concepts 
 Thanks to https://github.com/leandromoreira/ffmpeg-libav-tutorial
-AVPacket - encoded data
-AVFrame - decoded data
-AVStream has
+* AVPacket - encoded data
+* AVFrame - decoded data
+* AVStream has AVPackets
+* AVFormatContext ~ Container has AVStreams
+
+From the ffmpeg docs
+* AVFormatContext without a file needs pb param to be set
+* 
+
 
 # Setup
 ## Set up the Environment
@@ -277,5 +283,5 @@ trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM4OTM0MTk3OSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbNTQ2NzE5ODQ4LC0xODI4NTExMzkzXX0=
 -->
