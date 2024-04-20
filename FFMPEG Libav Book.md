@@ -278,7 +278,13 @@ https://www3.nd.edu/~zxu2/acms60212-40212/Makefile.pdf
 trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
+
+# Muxing a video 
+Muxing is keeping the same codec and cha
+
+## Mov to mp4
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyODc3Mjk4MjUsLTIwMzU4MTg3NSwxMD
-U3OTM0NjY1LC0xODI4NTExMzkzXX0=
+eyJoaXN0b3J5IjpbLTk4NTc1Mjk4NywtMjAzNTgxODc1LDEwNT
+c5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
