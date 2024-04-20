@@ -2,7 +2,7 @@
 
 # Motivation
 April 2024
-I am new to FFMPEG using the C libraries. The documentation is great but it doesn't explain concepts to a newbie.
+I am not new to FFMPEG, but new using the libav C libraries. The documentation is great but it doesn't explain concepts to a newbie.
 https://github.com/leandromoreira/ffmpeg-libav-tutorial
 is an excellent resource. It helped me understand the concepts and use of the data structures in libav.
 Still I had my own path and I found myself struggling to put together the code needed for the functionality I wanted to create.
@@ -278,6 +278,6 @@ trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMwNzI1NjM1MSwxMDU3OTM0NjY1LC0xOD
+eyJoaXN0b3J5IjpbLTIwMzU4MTg3NSwxMDU3OTM0NjY1LC0xOD
 I4NTExMzkzXX0=
 -->
