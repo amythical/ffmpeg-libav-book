@@ -8,6 +8,12 @@ is an excellent resource. It helped me understand the concepts and use of the da
 Still I had my own path and I found myself struggling to put together the code needed for the functionality I wanted to create.
 I am recording my findings, code and my experience so it helps me in the future as reference and smoothens anyone's path who has started on a similar journey.
 
+#	Concepts 
+Thanks to https://github.com/leandromoreira/ffmpeg-libav-tutorial
+AVPacket - encoded data
+AVFrame - decoded data
+AVStream has
+
 # Setup
 ## Set up the Environment
 * Mac M1 Sonoma
@@ -271,5 +277,5 @@ trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbMTM4OTM0MTk3OSwtMTgyODUxMTM5M119
 -->
