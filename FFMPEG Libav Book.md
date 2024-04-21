@@ -288,11 +288,11 @@ Both mp4 and mov have the same codec but diferent containers. Using the same cod
 Here is the code to change a mov to a m4.
 Most of the code is similar to trim.c above but I encountered an issue when working with certain files where the trimmed file was shorted than expected, example trimmed 9 seconds but final file was about 7 seconds.
 
-On debugging I found that the trim.c breaks the packet reading while loop based on the stream index of the packet. If we do a ffmpeg -i we get 
+On debugging I found that the trim.c breaks the packet reading while loop based on the stream index of the packet. If we do a ffmpeg -i we see that the audio stream index is 0 and the video stream index is 1. Also the audio duration is less than the video duration. So whats happening is the video trimming stops 
 
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgxMDE5MjE2MywtOTQ4Njk3NywtMjAzNT
-gxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTQ0OTUxOTUzLC05NDg2OTc3LC0yMDM1OD
+E4NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
 -->
