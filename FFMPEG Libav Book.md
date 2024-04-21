@@ -400,7 +400,7 @@ int cutFile(){
       }
 // FIX - record video streams index
  if(tInStream->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
-                videoStreamIndex = tStreamIndex;
+                videoStreamIndex = streamIndex;
 
 
       streamMapping[i] = streamIndex++;
@@ -500,8 +500,8 @@ int main(int args,const char* argv[])
 Now on running the muxing program
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NTMwOTM4OTYsLTE0NDgwOTA0NjgsLT
-E4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2
-OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M1
-19
+eyJoaXN0b3J5IjpbLTU4MTYxMTQ1OCwtMTk1MzA5Mzg5NiwtMT
+Q0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3Njg0LDEwODg2
+MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OTM0NjY1LC
+0xODI4NTExMzkzXX0=
 -->
