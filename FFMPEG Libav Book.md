@@ -303,8 +303,13 @@ Lets debug this
 
 The fix 
 * We have to stop the trimming only when the video PTS has reached the desired end trim time
+```
+// With fix to trim at video pts
+
+```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNT
-gxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTEwMjA4OTgwMzEsMTA4ODYyNDkxNCwtOT
+Q4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEz
+OTNdfQ==
 -->
