@@ -310,8 +310,8 @@ Lets debug this
 ```
 * If we do a *ffmpeg -i* we see that the audio stream index is 0 and the video stream index is 1. 
 * We also see that the audio duration is less than the video duration
-* So what is happening is the trimming stops when the audio streams end time is reached. The audio stream an index of 0, . The end time is calculated as per each stream's TIME_BASE so that fetches us a different number for the audio stream, and in our case the trimming end is reached earlier
-
+* So what is happening is the trimming stops when the audio streams end time is reached. The audio stream an index of 0 so it reached the condition to break on exceeding trim time first . 
+* The end time is calculated as per each stream's TIME_BASE so that fetches us a different number for the audio stream, and in our case shorter than the actual trim time and so reading and copy of packets stops by breaking out of the loop and the video duration 
 The fix 
 * We have to stop the trimming only when the video PTS has reached the desired end trim time
 
@@ -491,7 +491,7 @@ int main(int args,const char* argv[])
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NDYyMzYxMDAsLTE4NzA2MDAyOTMsLT
-E5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4
-NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbLTUyNjAzOTc3MSwtMTg3MDYwMDI5MywtMT
+k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
+NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
