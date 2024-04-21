@@ -291,14 +291,20 @@ Most of the code is similar to trim.c above but I encountered an issue when work
 Lets debug this 
 * We see that trim.c breaks the packet reading while loop based on the stream index of the packet.
 ```
+        if (tAvPacket->pts > tStreamRescaledEndSeconds[tAvPacket->stream_index])
+        {
+            av_packet_unref(tAvPacket);
+            break;
+        }
 ```
-* If we do a ffmpeg -i we see that the audio stream index is 0 and the video stream index is 1. Also the audio duration is less than the video duration. So whats happening is the video trimming stops when the audio streams end time is reached. The end time is calculated as per the each stream TIME_BASE so that fetches us a different number for the audio stream, and in our case the trimming end is reached earlier.
+* If we do a ffmpeg -i we see that the audio stream index is 0 and the video stream index is 1. 
+* We also see that the audio duration is less than the video duration
+* So what is happening is the trimming stops when the audio streams end time is reached. The end time is calculated as per the each stream TIME_BASE so that fetches us a different number for the audio stream, and in our case the trimming end is reached earlier
 
-
-
-```
+The fix 
+* 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTkwMTU2NjcxMiwtOTQ4Njk3NywtMjAzNT
-gxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTE4NDU5MjkwMjcsLTk0ODY5NzcsLTIwMz
+U4MTg3NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
