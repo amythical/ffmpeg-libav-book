@@ -318,6 +318,10 @@ Lets debug this by looking at the source code.
 * We have to stop the trimming only when the video PTS has reached the desired end trim time
 
 ```
+/*
+ * Trims 10 seconds of video starting from 5 seconds
+*/
+
 #include <libavformat/avformat.h>
 #include <libavformat/avio.h>
 #include <libavcodec/packet.h>
@@ -492,8 +496,10 @@ int main(int args,const char* argv[])
 }
 ```
 
+Now on running the muxing program
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjYyMDYyOTYwLC0xODcwNjAwMjkzLC0xOT
-U2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1
-LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLT
+E5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4
+NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
 -->
