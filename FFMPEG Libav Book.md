@@ -288,7 +288,12 @@ Muxing is keeping the same codec and changing the container, does not involve tr
 ## Mov to mp4
 Both mp4 and mov have the same codec but diferent containers. Using the same codec but changing the container is called 'muxing' or 'transmuxing' and is a light weight process because it does not involve codec changes.
 
-Here is the code to change a mov to a m4.
+The same trim.c changes the container to a mp4 container because we have specified the output with a mp4 container
+```
+
+```
+
+### Video duration is shorter than trim duration
 Most of the code is similar to trim.c above but I encountered an issue when working with certain files where the trimmed file was shorted than expected, example trimmed 9 seconds but final file was about 7 seconds.
 
 Lets debug this 
@@ -483,7 +488,7 @@ int main(int args,const char* argv[])
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjg0MTcwNSwtMTg3MDYwMDI5MywtMT
+eyJoaXN0b3J5IjpbLTM4NDMzMDY0MiwtMTg3MDYwMDI5MywtMT
 k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
 NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
