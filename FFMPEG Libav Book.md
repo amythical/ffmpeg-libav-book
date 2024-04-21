@@ -283,11 +283,14 @@ trim: trim.c
 Muxing is keeping the same codec and changing the container, does not involve transcoding
 
 ## Mov to mp4
-Both mp4 and mov have the same codec but diferent containers. The process of using the same codec but container change 
+Both mp4 and mov have the same codec but diferent containers. Using the same codec but changing the container is called 'muxing' or 'transmuxing' and is a light weight process because it does not involve codec changes.
+
+Here is the code to change a mov to a m4.
+Most of the code is similar to trim.c above but I encountered an
 
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NjcwMDc0MywtOTQ4Njk3NywtMjAzNT
+eyJoaXN0b3J5IjpbMTM5MDA1MDc5MCwtOTQ4Njk3NywtMjAzNT
 gxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
