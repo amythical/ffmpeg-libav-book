@@ -290,11 +290,14 @@ Both mp4 and mov have the same codec but diferent containers. Using the same cod
 
 The same trim.c changes the container to a mp4 container because we have specified the output with a mp4 container
 ```
-
+// output container is mp4
+char *outputFilePath="out.mp4";
+and
+avformat_alloc_output_context2(&avOutputFormatContext, NULL, NULL, outputFilePath);
 ```
 
-### Video duration is shorter than trim duration
-Most of the code is similar to trim.c above but I encountered an issue when working with certain files where the trimmed file was shorted than expected, example trimmed 9 seconds but final file was about 7 seconds.
+### Problem - Video duration is shorter than trim duration
+On running this on one of the mov files with audio and video streams,  I encountered an issue where the trimmed file was shorted than expected video duration, example trimmed 1-9 seconds but final file was about 7 seconds.
 
 Lets debug this 
 * We see that trim.c breaks the packet reading while loop based on the stream index of the packet.
@@ -488,7 +491,7 @@ int main(int args,const char* argv[])
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM4NDMzMDY0MiwtMTg3MDYwMDI5MywtMT
+eyJoaXN0b3J5IjpbLTE0NjQyOTk3NCwtMTg3MDYwMDI5MywtMT
 k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
 NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
