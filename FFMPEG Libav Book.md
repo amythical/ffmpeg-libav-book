@@ -286,11 +286,13 @@ Muxing is keeping the same codec and changing the container, does not involve tr
 Both mp4 and mov have the same codec but diferent containers. Using the same codec but changing the container is called 'muxing' or 'transmuxing' and is a light weight process because it does not involve codec changes.
 
 Here is the code to change a mov to a m4.
-Most of the code is similar to trim.c above but I encountered an
+Most of the code is similar to trim.c above but I encountered an issue when working with certain files where the trimmed file was shorted than expected, example trimmed 9 seconds but final file was about 7 seconds.
+
+On debugging I found that the trim.c breaks the packet reading while loop based on the stream index of the packet. If we do a ffmpeg -i we get 
 
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM5MDA1MDc5MCwtOTQ4Njk3NywtMjAzNT
+eyJoaXN0b3J5IjpbMTgxMDE5MjE2MywtOTQ4Njk3NywtMjAzNT
 gxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
