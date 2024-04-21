@@ -383,6 +383,9 @@ int cutFile(){
         streamMapping[i] = -1;
         continue;
       }
+ if(tInStream->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
+                videoStreamIndex = tStreamIndex;
+
 
       streamMapping[i] = streamIndex++;
 
@@ -426,10 +429,13 @@ int cutFile(){
         av_packet_unref(avPacket);
         continue;
       }
-       if(avPacket->pts >= streamRescaledEndSeconds[avPacket->stream_index]) {
-        av_packet_unref(avPacket);
-	break;
-       }
+      // break 
+      if (tAvPacket->stream_index == videoStreamIndex && tAvPacket->pts > tStreamRescaledEndSeconds[videoStreamIndex])
+        {
+            printf("%lld %d\n",tAvPacket->pts, tStreamRescaledEndSeconds[videoStreamIndex]);
+            av_packet_unref(tAvPacket);
+            break;
+        }
 
       avPacket->stream_index = streamMapping[avPacket->stream_index];
       //logPacket(avInputFormatContext, avPacket, "in");
@@ -476,7 +482,7 @@ int main(int args,const char* argv[])
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMD
-g4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2
-NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbLTkwMjcyMTQzNSwtMTg3MDYwMDI5MywtMT
+k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
+NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
