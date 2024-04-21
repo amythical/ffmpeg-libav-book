@@ -305,11 +305,219 @@ The fix
 * We have to stop the trimming only when the video PTS has reached the desired end trim time
 ```
 // With fix to trim at video pts
+#include <emscripten.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+#include <inttypes.h>
+#include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
+#include <libavformat/avio.h>
+#include <libavcodec/packet.h>
+#include <libavutil/log.h>
+#include <libavutil/timestamp.h>
+#include <libavutil/rational.h>
+
+uint8_t *buffer1Ptr = NULL;
+int buffer1Size = 0;
+
+uint8_t *buffer2Ptr = NULL;
+int buffer2Size = 0;
+
+
+typedef struct trimInfo {
+  int bufferSize;
+  uint8_t *buffer;
+} trimInfo;
+
+trimInfo *trimInfoPtr;
+
+static void logging(char *pMsg)
+{
+    printf("%s\n",pMsg);
+   // av_log(NULL, AV_LOG_DEBUG, "%s\n", pMsg);
+}
+
+uint8_t *EMSCRIPTEN_KEEPALIVE createVideoDataBuffer(int pBufferSize)
+{
+    printf("In C createVideoDataBuffer ... allocating space\n");
+    buffer1Size = pBufferSize;
+    buffer1Ptr = malloc(pBufferSize * sizeof(uint8_t));
+    return buffer1Ptr;
+}
+
+void EMSCRIPTEN_KEEPALIVE freeVideoDataBuffer()
+{
+    printf("In C destroyBufferImage ... freeing space\n");
+    if(buffer1Ptr)
+        free(buffer1Ptr);
+    if(buffer2Ptr)
+        free(buffer2Ptr);
+    // free(fileinfo_ptr->format_name);
+    // free(fileinfo_ptr);
+}
+
+trimInfo* EMSCRIPTEN_KEEPALIVE trimVideo()
+{
+
+    float tStartSeconds = 1.0;
+    float tEndSeconds = 9.0;
+
+    int tOperationResult;
+    AVIOContext *tAvInputIOContext = NULL;
+    AVIOContext *tAvOutputIOContext = NULL;
+    AVFormatContext *tAvInputFormatContext = NULL;
+    AVFormatContext *tAvOutputFormatContext = NULL;
+    AVPacket *tAvPacket = NULL;
+    int tWriteFlag = 0;
+    const char* tOutputFormatStr = "mp4";
+   tAvInputIOContext = avio_alloc_context(buffer1Ptr, buffer1Size, // internal Buffer and its size
+                                         tWriteFlag,  // bWriteable (1=true,0=false)
+                                         NULL,  // user data ; will be passed to our callback functions
+                                         NULL,  // read function
+                                         NULL,  // Write callback function (not used in this example)
+                                         NULL); //seek function
+  tAvInputFormatContext = avformat_alloc_context();
+  tAvInputFormatContext->pb = tAvInputIOContext;
+
+
+    tOperationResult = avformat_open_input(&tAvInputFormatContext, "", 0, 0);
+    if (tOperationResult < 0)
+    {
+        logging("Failed to open the input file");
+        return NULL;
+    }
+ // we dont get duration without this
+    tOperationResult = avformat_find_stream_info(tAvInputFormatContext, 0);
+    if (tOperationResult < 0)
+    {
+        logging("Failed to retrieve the input stream information.");
+    }
+
+    avio_open_dyn_buf(&tAvOutputIOContext);
+    avformat_alloc_output_context2(&tAvOutputFormatContext, NULL,tOutputFormatStr, NULL);
+    tAvOutputFormatContext->pb = tAvOutputIOContext;
+
+    if (!tAvOutputFormatContext)
+    {
+        tOperationResult = AVERROR_UNKNOWN;
+        logging("Failed to create the output context.");
+    }
+
+    int tStreamIndex = 0;
+    int tStreamMapping[tAvInputFormatContext->nb_streams];
+    int tStreamRescaledStartSeconds[tAvInputFormatContext->nb_streams];
+    int tStreamRescaledEndSeconds[tAvInputFormatContext->nb_streams];
+
+    // AUDIO STREAMS NEED TO BE CONVERTED TO AAC
+    // VARIABLE FPS TRANSCODE NEEDED
+    //
+
+// Copy streams from the input file to the output file.
+    for (int i = 0; i < tAvInputFormatContext->nb_streams; i++)
+    {
+
+        AVStream *tOutStream;
+        AVStream *tInStream = tAvInputFormatContext->streams[i];
+
+        // Calculate scaled start time and end time
+        tStreamRescaledStartSeconds[i] = av_rescale_q(tStartSeconds * AV_TIME_BASE, AV_TIME_BASE_Q, tInStream->time_base);
+        tStreamRescaledEndSeconds[i] = av_rescale_q(tEndSeconds * AV_TIME_BASE, AV_TIME_BASE_Q, tInStream->time_base);
+
+        if (tInStream->codecpar->codec_type != AVMEDIA_TYPE_AUDIO &&
+            tInStream->codecpar->codec_type != AVMEDIA_TYPE_VIDEO &&
+            tInStream->codecpar->codec_type != AVMEDIA_TYPE_SUBTITLE)
+        {
+            tStreamMapping[i] = -1;
+            continue;
+        }
+
+        tStreamMapping[i] = tStreamIndex++;
+
+        tOutStream = avformat_new_stream(tAvOutputFormatContext, NULL);
+        if (!tOutStream)
+        {
+            tOperationResult = AVERROR_UNKNOWN;
+            logging("Failed to allocate the output stream.");
+        }
+
+        tOperationResult = avcodec_parameters_copy(tOutStream->codecpar, tInStream->codecpar);
+        if (tOperationResult < 0)
+        {
+            logging("Failed to copy codec parameters from input stream to output stream.");
+        }
+        tOutStream->codecpar->codec_tag = 0;
+    } // for
+
+  tOperationResult = avformat_write_header(tAvOutputFormatContext, NULL);
+    if (tOperationResult < 0)
+    {
+        logging("Error occurred when opening output file.");
+    }
+
+    tOperationResult = avformat_seek_file(tAvInputFormatContext, -1, INT64_MIN, tStartSeconds * AV_TIME_BASE,
+                                          tStartSeconds * AV_TIME_BASE, 0);
+    if (tOperationResult < 0)
+    {
+        logging("Failed to seek the input file to the targeted start position.");
+    }
+
+
+    tAvPacket = av_packet_alloc();
+    if (!tAvPacket)
+    {
+        logging("Failed to allocate AVPacket.");
+        return NULL;
+    }
+while (1)
+    {
+        tOperationResult = av_read_frame(tAvInputFormatContext, tAvPacket);
+        if (tOperationResult < 0)
+            break;
+
+        // Skip packets from unknown streams and packets after the end cut position.
+        if (tAvPacket->stream_index > tAvInputFormatContext->nb_streams || tStreamMapping[tAvPacket->stream_index] < 0)
+        {
+            av_packet_unref(tAvPacket);
+            continue;
+        }
+        if (tAvPacket->pts > tStreamRescaledEndSeconds[tAvPacket->stream_index])
+        {
+            av_packet_unref(tAvPacket);
+            break;
+        }
+
+        tAvPacket->stream_index = tStreamMapping[tAvPacket->stream_index];
+        // logPacket(tAvInputFormatContext, tAvPacket, "in");
+
+        // Shift the packet to its new position by subtracting the rescaled start seconds.
+        tAvPacket->pts -= tStreamRescaledStartSeconds[tAvPacket->stream_index];
+        tAvPacket->dts -= tStreamRescaledStartSeconds[tAvPacket->stream_index];
+
+        av_packet_rescale_ts(tAvPacket, tAvInputFormatContext->streams[tAvPacket->stream_index]->time_base,
+                             tAvOutputFormatContext->streams[tAvPacket->stream_index]->time_base);
+        tAvPacket->pos = -1;
+        // logPacket(tAvOutputFormatContext, tAvPacket, "out");
+
+        tOperationResult = av_interleaved_write_frame(tAvOutputFormatContext, tAvPacket);
+        if (tOperationResult < 0)
+        {
+            logging("Failed to mux the packet.");
+        }
+    } // while
+
+    av_write_trailer(tAvOutputFormatContext);
+
+    av_packet_free(&tAvPacket);
+    avformat_close_input(&tAvInputFormatContext);
+
+
 
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjA4OTgwMzEsMTA4ODYyNDkxNCwtOT
-Q4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEz
-OTNdfQ==
+eyJoaXN0b3J5IjpbNDA4Mzc0NzQwLDEwODg2MjQ5MTQsLTk0OD
+Y5NzcsLTIwMzU4MTg3NSwxMDU3OTM0NjY1LC0xODI4NTExMzkz
+XX0=
 -->
