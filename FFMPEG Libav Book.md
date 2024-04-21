@@ -367,6 +367,7 @@ int cutFile(){
     int streamMapping[avInputFormatContext->nb_streams];
     int streamRescaledStartSeconds[avInputFormatContext->nb_streams];
     int streamRescaledEndSeconds[avInputFormatContext->nb_streams];
+    int videoStreamIndex = 0;
 
     // Copy streams from the input file to the output file.
     for (int i = 0; i < avInputFormatContext->nb_streams; i++) {
@@ -475,7 +476,7 @@ int main(int args,const char* argv[])
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NjE0NjA2NTUsLTE5NTYyNzY4NCwxMD
+eyJoaXN0b3J5IjpbLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMD
 g4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2
 NSwtMTgyODUxMTM5M119
 -->
