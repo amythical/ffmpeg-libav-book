@@ -503,11 +503,15 @@ int main(int args,const char* argv[])
 }
 ```
 
-Now on running the muxing program
+Now on running the muxing program, the video duration is as expected
+
+### Problem - Audio video is async on scrubbing the video
+On playing the video it plays out fine, now if we scrub this video
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MT
-YxMTQ1OCwtMTk1MzA5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYw
-MDI5MywtMTk1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLT
-IwMzU4MTg3NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
+eyJoaXN0b3J5IjpbLTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MD
+UwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkw
+NDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2ODQsMTA4ODYyNDkxNC
+wtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1
+MTEzOTNdfQ==
 -->
