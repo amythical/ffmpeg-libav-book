@@ -31,8 +31,11 @@ Pull a docker debian instance, 'unstable-slim' is the  debian image I searched a
 ### Install FFMPEG
 	https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 
-## Mac M1 instructions
+## For Standalone FFMPEG on Mac M1 (No Docker)
+*pkg-config not finding gnutls error*
+```
 brew outdated "pkg-config" || brew upgrade "pkg-config"
+```
 
 ### New docker image
 Save container as a new image, so we have an image with ffmpeg installed
@@ -503,8 +506,8 @@ int main(int args,const char* argv[])
 Now on running the muxing program
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDUwNTA5MzY0LC01ODE2MTE0NTgsLTE5NT
-MwOTM4OTYsLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLTE5NTYy
-NzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4NzUsMT
-A1NzkzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbMTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MT
+YxMTQ1OCwtMTk1MzA5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYw
+MDI5MywtMTk1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLT
+IwMzU4MTg3NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
