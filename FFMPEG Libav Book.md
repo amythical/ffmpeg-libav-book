@@ -320,6 +320,7 @@ Lets debug this by looking at the source code.
 ```
 /*
  * Trims 10 seconds of video starting from 5 seconds
+ * Fixed to record video stream index and stop copying packets when the PTS exceeds the video stream PTS
 */
 
 #include <libavformat/avformat.h>
@@ -499,7 +500,8 @@ int main(int args,const char* argv[])
 Now on running the muxing program
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLT
-E5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4
-NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbLTE5NTMwOTM4OTYsLTE0NDgwOTA0NjgsLT
+E4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2
+OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M1
+19
 -->
