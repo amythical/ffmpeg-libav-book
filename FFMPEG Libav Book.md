@@ -280,8 +280,36 @@ trim: trim.c
 ```
 
 
+
+
+# Muxing a video 
+Muxing is keeping the same codec and changing the container, does not involve transcoding
+
+## Mov to mp4
+Both mp4 and mov have the same codec but diferent containers. Using the same codec but changing the container is called 'muxing' or 'transmuxing' and is a light weight process because it does not involve codec changes.
+
+Here is the code to change a mov to a m4.
+Most of the code is similar to trim.c above but I encountered an issue when working with certain files where the trimmed file was shorted than expected, example trimmed 9 seconds but final file was about 7 seconds.
+
+Lets debug this 
+* We see that trim.c breaks the packet reading while loop based on the stream index of the packet.
+```
+        if (tAvPacket->pts > tStreamRescaledEndSeconds[tAvPacket->stream_index])
+        {
+            av_packet_unref(tAvPacket);
+            break;
+        }
+```
+* If we do a ffmpeg -i we see that the audio stream index is 0 and the video stream index is 1. 
+* We also see that the audio duration is less than the video duration
+* So what is happening is the trimming stops when the audio streams end time is reached. The end time is calculated as per the each stream TIME_BASE so that fetches us a different number for the audio stream, and in our case the trimming end is reached earlier
+
+The fix 
+* We have to stop the trimming only when the video PTS has reached the desired end trim time
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNTE4NTY0NTMsMTA4ODYyNDkxNCwtOT
+eyJoaXN0b3J5IjpbLTE2NzM4NDI2NzgsMTA4ODYyNDkxNCwtOT
 Q4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEz
 OTNdfQ==
 -->
