@@ -135,7 +135,7 @@ int cutFile(){
   char *outputFilePath="out.mp4";
 
   int startSeconds = 5;
-  int endSeconds = 15;
+  int endSeconds = 15;// indicates the duration and not the time
 
   int operationResult;
 
@@ -505,13 +505,11 @@ int main(int args,const char* argv[])
 
 Now on running the muxing program, the video duration is as expected
 
-### Problem - Audio video is async on scrubbing the video
-On playing the video it plays out fine, now if we scrub this video
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MD
-UwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkw
-NDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2ODQsMTA4ODYyNDkxNC
-wtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1
-MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTIwNjkxMzc3NzIsLTI3MzI0OTkwNywxMj
+A4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkz
+ODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2OD
+QsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5
+MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
