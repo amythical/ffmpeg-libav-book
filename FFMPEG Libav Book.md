@@ -299,7 +299,8 @@ avformat_alloc_output_context2(&avOutputFormatContext, NULL, NULL, outputFilePat
 ### Problem - Video duration is shorter than trim duration
 On running this on one of the mov files with audio and video streams,  I encountered an issue where the trimmed file was shorted than expected video duration, example trimmed 1-9 seconds but final file was about 7 seconds.
 
-Lets debug this 
+#### Debugging
+Lets debug this by looking at the source code.
 * We see that trim.c breaks the packet reading while loop based on the stream index of the packet.
 ```
         if (tAvPacket->pts > tStreamRescaledEndSeconds[tAvPacket->stream_index])
@@ -311,8 +312,9 @@ Lets debug this
 * If we do a *ffmpeg -i* we see that the audio stream index is 0 and the video stream index is 1. 
 * We also see that the audio duration is less than the video duration
 * So what is happening is the trimming stops when the audio streams end time is reached. The audio stream an index of 0 so it reached the condition to break on exceeding trim time first . 
-* The end time is calculated as per each stream's TIME_BASE so that fetches us a different number for the audio stream, and in our case shorter than the actual trim time and so reading and copy of packets stops by breaking out of the loop and the video duration 
-The fix 
+* The end time is calculated as per each stream's TIME_BASE so that fetches us a different number for the audio stream, and in our case shorter than the actual trim time and so reading and copy of packets stops by breaking out of the loop and the video duration neds up being shorter than the expected duration
+
+#### The fix 
 * We have to stop the trimming only when the video PTS has reached the desired end trim time
 
 ```
@@ -375,7 +377,7 @@ int cutFile(){
     int streamMapping[avInputFormatContext->nb_streams];
     int streamRescaledStartSeconds[avInputFormatContext->nb_streams];
     int streamRescaledEndSeconds[avInputFormatContext->nb_streams];
-    int videoStreamIndex = 0;
+    int videoStreamIndex = 0;// record the video streams index
 
     // Copy streams from the input file to the output file.
     for (int i = 0; i < avInputFormatContext->nb_streams; i++) {
@@ -491,7 +493,7 @@ int main(int args,const char* argv[])
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUyNjAzOTc3MSwtMTg3MDYwMDI5MywtMT
+eyJoaXN0b3J5IjpbMTk5OTI0MTkzNCwtMTg3MDYwMDI5MywtMT
 k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
 NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
