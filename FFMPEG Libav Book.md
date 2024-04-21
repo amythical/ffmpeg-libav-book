@@ -505,11 +505,14 @@ int main(int args,const char* argv[])
 
 Now on running the muxing program, the video duration is as expected
 
-
+## For Constant frame rate
+```
+What you're looking for is fixed gop and fps! to achieve that just set stream  `avg_frame_rate`  and  `tune`  to  `zerolatency`, that's all.
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwNjkxMzc3NzIsLTI3MzI0OTkwNywxMj
-A4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkz
-ODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2OD
-QsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5
-MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbOTExMzkyMjgwLC0yNzMyNDk5MDcsMTIwOD
+Q3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1MzA5Mzg5
+NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3Njg0LD
+EwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OTM0
+NjY1LC0xODI4NTExMzkzXX0=
 -->
