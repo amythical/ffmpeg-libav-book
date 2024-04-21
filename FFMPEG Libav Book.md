@@ -302,9 +302,9 @@ Lets debug this
 * So what is happening is the trimming stops when the audio streams end time is reached. The end time is calculated as per the each stream TIME_BASE so that fetches us a different number for the audio stream, and in our case the trimming end is reached earlier
 
 The fix 
-* 
+* We have to stop the trimming only when the video PTS has reached the desired end trim time
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4NDU5MjkwMjcsLTk0ODY5NzcsLTIwMz
-U4MTg3NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
+eyJoaXN0b3J5IjpbMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNT
+gxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
