@@ -511,6 +511,7 @@ Now on running the muxing program, the video duration is as expected
 
 // Audio transcoding to aac
 
+
 * Copyright (c) 2013-2022 Andreas Unterweger
 
 *
@@ -2092,7 +2093,8 @@ return ret;
 
 # Transcode Video
 ```
-// my video transcoding code
+// Video transcoding code
+// Code from https://github.com/leandromoreira/ffmpeg-libav-tutorial rehashed and rewritten for my understanding
 
 #include  <libavcodec/avcodec.h>
 
@@ -2655,8 +2657,8 @@ return operationResult <0 ? operationResult: AVERROR_EXIT;
 ```
 # Transcode and mux video and audio
 ```
-// my video transcoding code
-// Code rehashed using code from https://github.com/leandromoreira/ffmpeg-libav-tutorial
+// Video transcoding code
+// Code from https://github.com/leandromoreira/ffmpeg-libav-tutorial rehashed and rewritten for my understanding
 
 #include  <libavcodec/avcodec.h>
 
@@ -3228,9 +3230,9 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 *Source - Stackoverflow*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3ODEzNTUsOTExMzkyMjgwLC0yNzMyND
-k5MDcsMTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwt
-MTk1MzA5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMT
-k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
-NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
+eyJoaXN0b3J5IjpbLTcxMjg3NzU5LDkxMTM5MjI4MCwtMjczMj
+Q5OTA3LDEyMDg0NzA2MDUsNDUwNTA5MzY0LC01ODE2MTE0NTgs
+LTE5NTMwOTM4OTYsLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLT
+E5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4
+NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
 -->
