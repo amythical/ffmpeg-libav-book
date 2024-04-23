@@ -2072,7 +2072,10 @@ return ret;
 
 }
 ```
+## makefile
+```
 
+```
 # Transcode Video
 ```
 // Video transcoding code
@@ -3212,7 +3215,7 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 *Source - Stackoverflow*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ0OTMwMjg2Myw5MTEzOTIyODAsLTI3Mz
+eyJoaXN0b3J5IjpbMTEwNDIxNDQ3Nyw5MTEzOTIyODAsLTI3Mz
 I0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4
 LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC
 0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgx
