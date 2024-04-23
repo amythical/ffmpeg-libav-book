@@ -2656,6 +2656,7 @@ return operationResult <0 ? operationResult: AVERROR_EXIT;
 # Transcode and mux video and audio
 ```
 // my video transcoding code
+// Code rehashed using code from https://github.com/leandromoreira/ffmpeg-libav-tutorial
 
 #include  <libavcodec/avcodec.h>
 
@@ -3227,9 +3228,9 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 *Source - Stackoverflow*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk0ODIwMzU5Nyw5MTEzOTIyODAsLTI3Mz
-I0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4
-LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC
-0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgx
-ODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTE3ODEzNTUsOTExMzkyMjgwLC0yNzMyND
+k5MDcsMTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwt
+MTk1MzA5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMT
+k1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3
+NSwxMDU3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
