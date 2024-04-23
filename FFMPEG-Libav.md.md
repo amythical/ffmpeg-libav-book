@@ -199,3 +199,6 @@ Makefile
 trim: trim.c
 	gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib -o trim trim.c -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTE3MTEzODY4MjRdfQ==
+-->
