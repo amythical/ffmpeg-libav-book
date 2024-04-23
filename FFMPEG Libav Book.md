@@ -2074,7 +2074,9 @@ return ret;
 ```
 ## makefile
 ```
+audiotranscode: audiotranscode.c
 
+gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm -lvorbis -lvpx -lfdk-aac -lavfilter -lswscale -lpostproc -lass -lfreetype -lavutil -lavcodec
 ```
 # Transcode Video
 ```
@@ -2640,6 +2642,14 @@ return operationResult <0 ? operationResult: AVERROR_EXIT;
 
 }//main
 ```
+## makefile
+```
+
+videotranscode: videotranscode.c
+
+gcc -g -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm -lvorbis -lvpx -lfdk-aac -lavfilter -lswscale -lpostproc -lass -lfreetype -lavutil -lavcodec -lvorbisenc -lx265
+```
+
 # Transcode and mux video and audio
 ```
 // Video transcoding code
@@ -3208,14 +3218,20 @@ return operationResult <0 ? operationResult: AVERROR_EXIT;
 
 }//main
 ```
+## makefile
+```
+alltranscode: alltranscode.c
 
-## For Constant frame rate
+gcc -g -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm -lvorbis -lvpx -lfdk-aac -lavfilter -lswscale -lpostproc -lass -lfreetype -lavutil -lavcodec -lvorbisenc -lx265
+```
+
+# For Constant frame rate
 
 What you're looking for is fixed gop and fps! to achieve that just set stream  `avg_frame_rate`  and  `tune`  to  `zerolatency`, that's all.
 *Source - Stackoverflow*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTEwNDIxNDQ3Nyw5MTEzOTIyODAsLTI3Mz
+eyJoaXN0b3J5IjpbLTQ4OTQzOTcyNCw5MTEzOTIyODAsLTI3Mz
 I0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4
 LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC
 0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgx
