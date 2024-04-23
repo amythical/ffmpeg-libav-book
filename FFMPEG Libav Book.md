@@ -2091,9 +2091,1135 @@ return ret;
 ```
 
 # Transcode Video
+```
+// my video transcoding code
 
+#include  <libavcodec/avcodec.h>
+
+#include  <libavformat/avformat.h>
+
+#include  <libavutil/timestamp.h>
+
+#include  <stdio.h>
+
+#include  <stdarg.h>
+
+#include  <stdlib.h>
+
+#include  <libavutil/opt.h>
+
+#include  <string.h>
+
+#include  <inttypes.h>
+
+  
+
+void  logger(char *msg){
+
+printf("%s\n",msg);
+
+}
+
+  
+  
+
+int  encode_video(int  inputVideoStreamIndex,AVStream* inputVideoStream,AVFormatContext* outputFormatContext,AVStream* outputVideoStream,AVCodecContext* outputVideoCodecContext,AVFrame *inputFrame){
+
+if (inputFrame) inputFrame->pict_type = AV_PICTURE_TYPE_NONE;
+
+  
+
+AVPacket *outputPacket = av_packet_alloc();
+
+if (!outputPacket) {
+
+logger("could not allocate memory for output packet");
+
+return -1;
+
+}
+
+// encode decoded frame to output packet with output codec
+
+int response = avcodec_send_frame(outputVideoCodecContext, inputFrame);
+
+while (response >= 0) {
+
+response = avcodec_receive_packet(outputVideoCodecContext, outputPacket);
+
+if (response == AVERROR(EAGAIN) || response == AVERROR_EOF) {
+
+break;
+
+} else  if (response < 0) {
+
+logger("Error while receiving packet from encoder");//: %s", av_err2str(response));
+
+return -1;
+
+}
+
+  
+
+outputPacket->stream_index = inputVideoStreamIndex;
+
+outputPacket->duration = outputVideoStream->time_base.den / outputVideoStream->time_base.num / inputVideoStream->avg_frame_rate.num * inputVideoStream->avg_frame_rate.den;
+
+  
+
+av_packet_rescale_ts(outputPacket, inputVideoStream->time_base, outputVideoStream->time_base);
+
+response = av_interleaved_write_frame(outputFormatContext, outputPacket);
+
+if (response != 0) {
+
+logger("Error %d while receiving packet from decoder");//: %s", response, av_err2str(response));
+
+return -1;
+
+}
+
+}// while receive_packet
+
+av_packet_unref(outputPacket);
+
+av_packet_free(&outputPacket);
+
+return  0;
+
+}
+
+  
+
+int  main(int  argc, char *argv[])
+
+{
+
+char* inputFile = "input.mov";
+
+char* outputFile = "output.mp4";
+
+char *videoOuputCodecName = "libx264";
+
+  
+
+char *videoOutputCodecPrivateKey = "x264-params";
+
+char *videoOutputCodecPrivateValue = "keyint=60:min-keyint=60:scenecut=0:force-cfr=1";
+
+char *muxerOptionsKey = NULL;
+
+char *muxerOptionaValue = NULL;
+
+int transcodeVideo = 1;
+
+int operationResult = 0;
+
+int inputVideoStreamIndex = 0;
+
+  
+  
+
+AVFormatContext *inputFormatContext = NULL, *outputFormatContext = NULL;
+
+AVCodecContext *inputCodecContext = NULL, *outputCodecContext = NULL;
+
+AVStream *inputVideoStream, *outputVideoStream;
+
+  
+
+// av_log_set_level(AV_LOG_QUIET);// or we get debug messages from libx264
+
+  
+
+/* Open the input file for reading. */
+
+// **format context, filename,format, options dict decoder priv options
+
+operationResult= avformat_open_input(&inputFormatContext,inputFile,NULL,NULL);
+
+if(operationResult < 0){
+
+logger("Error opening input");
+
+return -1;
+
+}
+
+  
+  
+
+/* Get information on the input file (number of streams etc.). */
+
+if ((operationResult = avformat_find_stream_info(inputFormatContext, NULL)) < 0) {
+
+logger("Could not open find stream info");// (error '%s')\ av_err2str(error));
+
+goto cleanup;
+
+}
+
+  
+
+/* Make sure that there is only one stream in the input file. */
+
+if (inputFormatContext->nb_streams > 1) {
+
+logger("Expected one audio input stream, but found more");//%d\n",
+
+// (*input_format_context)->nb_streams);
+
+goto cleanup;
+
+}
+
+// TODO: Loop through streams and extract index based on if (inputFormatContext->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+
+inputVideoStream = inputFormatContext->streams[0];// video stream - only 1 stream
+
+inputVideoStreamIndex = 0;
+
+  
+
+// Create codec and codec context to be used for decoding input
+
+AVCodec* inputVideoCodec = avcodec_find_decoder(inputVideoStream->codecpar->codec_id);
+
+if(!inputVideoCodec){
+
+printf("Cant find codec for encoder codec id %d\n",inputVideoStream->codecpar->codec_id);
+
+goto cleanup;
+
+}
+
+// create a codec context for input (decoder)
+
+AVCodecContext* inputVideoCodecContext = avcodec_alloc_context3(inputVideoCodec);
+
+if (!inputVideoCodecContext) {
+
+logger("failed to alloc memory for inputVideoCodecContext");
+
+goto cleanup;
+
+}
+
+// copy codec params from input stream to codec
+
+if (operationResult = avcodec_parameters_to_context(inputVideoCodecContext, inputVideoStream->codecpar) < 0) {
+
+logger("failed to fill inputVideoCodecContext ");
+
+goto cleanup;
+
+}
+
+// Avcodeccontext, avcodec,options-codec params
+
+if (operationResult=avcodec_open2(inputVideoCodecContext,inputVideoCodec, NULL) < 0) {
+
+logger("failed to open inputVideoCodecContext");
+
+goto cleanup;
+
+}
+
+  
+  
+
+// Create encoder with context for output
+
+// *format context, AVOutputformat, formatname, filename
+
+avformat_alloc_output_context2(&outputFormatContext, NULL, NULL, outputFile);
+
+if (!outputFormatContext) {
+
+logger("could not allocate memory for output format");
+
+goto cleanup;
+
+}
+
+  
+
+AVCodecContext* outputVideoCodecContext = NULL;
+
+if(transcodeVideo){
+
+// formatcontext,stream, frame
+
+AVRational inputFramerate = av_guess_frame_rate(inputFormatContext,inputVideoStream, NULL);
+
+// printf("input frame rate %d %d\n",inputFramerate.num, inputFramerate.den);
+
+  
+
+// create output stream
+
+outputVideoStream = avformat_new_stream(outputFormatContext, NULL);
+
+AVCodec* outputVideoCodec = avcodec_find_encoder_by_name(videoOuputCodecName);
+
+if(!outputVideoCodec){
+
+printf("Cant find codec by name %s\n",videoOuputCodecName);
+
+goto cleanup;
+
+}
+
+  
+
+outputVideoCodecContext = avcodec_alloc_context3(outputVideoCodec);
+
+if(!outputVideoCodecContext){
+
+logger("Cant allocate memory for outputVideoCodecContext");
+
+goto cleanup;
+
+}
+
+// set output codec options (encoder)
+
+av_opt_set(outputVideoCodecContext->priv_data, "preset", "ultrafast", 0);
+
+if (videoOutputCodecPrivateKey && videoOutputCodecPrivateValue)
+
+av_opt_set(outputVideoCodecContext->priv_data, videoOutputCodecPrivateKey, videoOutputCodecPrivateValue, 0);
+
+  
+
+// printf("wxh = %d x %d\n",inputVideoCodecContext->width,inputVideoCodecContext->height);
+
+  
+
+// Set outputcodec params from input
+
+outputVideoCodecContext->height = inputVideoCodecContext->height;
+
+outputVideoCodecContext->width = inputVideoCodecContext->width;
+
+outputVideoCodecContext->sample_aspect_ratio = inputVideoCodecContext->sample_aspect_ratio;
+
+if (outputVideoCodec->pix_fmts)
+
+outputVideoCodecContext->pix_fmt = outputVideoCodec->pix_fmts[0];
+
+else
+
+outputVideoCodecContext->pix_fmt = inputVideoCodecContext->pix_fmt;
+
+outputVideoCodecContext->bit_rate = 2 * 1000 * 1000;
+
+outputVideoCodecContext->rc_buffer_size = 4 * 1000 * 1000;
+
+outputVideoCodecContext->rc_max_rate = 2 * 1000 * 1000;
+
+outputVideoCodecContext->rc_min_rate = 2.5 * 1000 * 1000;
+
+  
+
+outputVideoCodecContext->time_base = av_inv_q(inputFramerate);
+
+outputVideoStream->time_base = outputVideoCodecContext->time_base;
+
+  
+
+if (avcodec_open2(outputVideoCodecContext, outputVideoCodec, NULL) < 0) {
+
+logger("could not open the codec outputVideoCodec");
+
+goto cleanup;
+
+}
+
+avcodec_parameters_from_context(outputVideoStream->codecpar, outputVideoCodecContext);
+
+  
+
+}// encode video stream
+
+else {
+
+//copy video stream
+
+/* int prepare_copy(AVFormatContext *avfc, AVStream **avs, AVCodecParameters *decoder_par) {
+
+*avs = avformat_new_stream(avfc, NULL);
+
+avcodec_parameters_copy((*avs)->codecpar, decoder_par);
+
+return 0;
+
+} */
+
+}// copy video stream - dont encode
+
+  
+
+if (outputFormatContext->oformat->flags & AVFMT_GLOBALHEADER)
+
+outputFormatContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+  
+
+if (!(outputFormatContext->oformat->flags & AVFMT_NOFILE)) {
+
+if (avio_open(&outputFormatContext->pb, outputFile, AVIO_FLAG_WRITE) < 0) {
+
+logger("could not open the output file");
+
+goto cleanup;
+
+}
+
+}
+
+  
+
+AVDictionary* muxerOptions = NULL;
+
+if (muxerOptionsKey && muxerOptionaValue) {
+
+av_dict_set(&muxerOptions,muxerOptionsKey,muxerOptionaValue, 0);
+
+}
+
+// Write header to output file before writing frame/packet data
+
+if (avformat_write_header(outputFormatContext, &muxerOptions) < 0) {
+
+logger("an error occurred writing header to output file");
+
+goto cleanup;
+
+}
+
+  
+
+AVFrame *inputFrame = av_frame_alloc();
+
+if(!inputFrame){
+
+logger("Failed to allocate memory for input frame");
+
+goto cleanup;
+
+}
+
+AVPacket *inputPacket = av_packet_alloc();
+
+if (!inputPacket) {
+
+logger("failed to allocated memory for input packet");
+
+goto cleanup;
+
+}
+
+  
+
+while (av_read_frame(inputFormatContext, inputPacket) >= 0)
+
+{
+
+if (inputFormatContext->streams[inputPacket->stream_index]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+
+if(transcodeVideo){
+
+operationResult = avcodec_send_packet(inputVideoCodecContext, inputPacket);
+
+if(operationResult < 0){
+
+logger("Error while sending packet to decoder");
+
+goto cleanup;
+
+}
+
+while(operationResult >=0){
+
+operationResult = avcodec_receive_frame(inputVideoCodecContext, inputFrame);
+
+if (operationResult == AVERROR(EAGAIN) || operationResult == AVERROR_EOF) {
+
+break;
+
+}
+
+else  if (operationResult < 0) {
+
+logger("Error while receiving frame from decoder");//, av_err2str(response));
+
+goto cleanup;
+
+}
+
+if (operationResult >= 0) {
+
+if(operationResult=encode_video(inputVideoStreamIndex,inputVideoStream,outputFormatContext,outputVideoStream,outputVideoCodecContext,inputFrame)) break;
+
+}// if avcodec_receive_frame
+
+av_frame_unref(inputFrame);
+
+}// while operationResult > = 0
+
+av_packet_unref(inputPacket);
+
+}// if transcodeVideo
+
+else{
+
+  
+
+}
+
+}
+
+}// while av_read_frame
+
+  
+
+// TODO: should I also flush the audio encoder?
+
+if(operationResult=encode_video(inputVideoStreamIndex,inputVideoStream,outputFormatContext,outputVideoStream,outputVideoCodecContext,NULL)){
+
+logger("Error trying to flush video enoder");
+
+goto cleanup;
+
+}
+
+  
+
+av_write_trailer(outputFormatContext);
+
+  
+  
+
+goto cleanup;
+
+cleanup:
+
+if(inputFormatContext)
+
+avformat_close_input(&inputFormatContext);
+
+if(muxerOptions)
+
+av_dict_free(&muxerOptions);
+
+if(inputFrame)
+
+av_frame_free(&inputFrame);
+
+if(inputPacket)
+
+av_packet_free(&inputPacket);
+
+  
+
+if(inputFormatContext){
+
+avformat_close_input(&inputFormatContext);
+
+avformat_free_context(inputFormatContext);
+
+inputFormatContext = NULL;
+
+}
+
+if(outputFormatContext){
+
+avformat_free_context(outputFormatContext);
+
+outputFormatContext = NULL;
+
+}
+
+if(inputVideoCodecContext){
+
+avcodec_free_context(&inputVideoCodecContext);
+
+inputVideoCodecContext = NULL;
+
+}
+
+return operationResult <0 ? operationResult: AVERROR_EXIT;
+
+}//main
+```
 # Transcode and mux video and audio
+```
+// my video transcoding code
 
+#include  <libavcodec/avcodec.h>
+
+#include  <libavformat/avformat.h>
+
+#include  <libavutil/timestamp.h>
+
+#include  <stdio.h>
+
+#include  <stdarg.h>
+
+#include  <stdlib.h>
+
+#include  <libavutil/opt.h>
+
+#include  <string.h>
+
+#include  <inttypes.h>
+
+  
+
+void  logger(char *msg){
+
+printf("%s\n",msg);
+
+}
+
+  
+  
+
+int  encode_video(int  inputVideoStreamIndex,AVStream* inputVideoStream,AVFormatContext* outputFormatContext,AVStream* outputVideoStream,AVCodecContext* outputVideoCodecContext,AVFrame *inputFrame){
+
+if (inputFrame) inputFrame->pict_type = AV_PICTURE_TYPE_NONE;
+
+  
+
+AVPacket *outputPacket = av_packet_alloc();
+
+if (!outputPacket) {
+
+logger("could not allocate memory for output packet");
+
+return -1;
+
+}
+
+// encode decoded frame to output packet with output codec
+
+int response = avcodec_send_frame(outputVideoCodecContext, inputFrame);
+
+while (response >= 0) {
+
+response = avcodec_receive_packet(outputVideoCodecContext, outputPacket);
+
+if (response == AVERROR(EAGAIN) || response == AVERROR_EOF) {
+
+break;
+
+} else  if (response < 0) {
+
+logger("Error while receiving packet from encoder");//: %s", av_err2str(response));
+
+return -1;
+
+}
+
+  
+
+outputPacket->stream_index = inputVideoStreamIndex;
+
+outputPacket->duration = outputVideoStream->time_base.den / outputVideoStream->time_base.num / inputVideoStream->avg_frame_rate.num * inputVideoStream->avg_frame_rate.den;
+
+  
+
+av_packet_rescale_ts(outputPacket, inputVideoStream->time_base, outputVideoStream->time_base);
+
+response = av_interleaved_write_frame(outputFormatContext, outputPacket);
+
+if (response != 0) {
+
+logger("Error %d while receiving packet from decoder");//: %s", response, av_err2str(response));
+
+return -1;
+
+}
+
+}// while receive_packet
+
+av_packet_unref(outputPacket);
+
+av_packet_free(&outputPacket);
+
+return  0;
+
+}
+
+  
+
+int  main(int  argc, char *argv[])
+
+{
+
+char* inputFile = "input.mov";
+
+char* outputFile = "output.mp4";
+
+char *videoOuputCodecName = "libx264";
+
+  
+
+char *videoOutputCodecPrivateKey = "x264-params";
+
+char *videoOutputCodecPrivateValue = "keyint=60:min-keyint=60:scenecut=0:force-cfr=1";
+
+char *muxerOptionsKey = NULL;
+
+char *muxerOptionaValue = NULL;
+
+int transcodeVideo = 1;
+
+int operationResult = 0;
+
+int inputVideoStreamIndex = 0;
+
+  
+  
+
+AVFormatContext *inputFormatContext = NULL, *outputFormatContext = NULL;
+
+AVCodecContext *inputCodecContext = NULL, *outputCodecContext = NULL;
+
+AVStream *inputVideoStream, *outputVideoStream;
+
+  
+
+// av_log_set_level(AV_LOG_QUIET);// or we get debug messages from libx264
+
+  
+
+/* Open the input file for reading. */
+
+// **format context, filename,format, options dict decoder priv options
+
+operationResult= avformat_open_input(&inputFormatContext,inputFile,NULL,NULL);
+
+if(operationResult < 0){
+
+logger("Error opening input");
+
+return -1;
+
+}
+
+  
+  
+
+/* Get information on the input file (number of streams etc.). */
+
+if ((operationResult = avformat_find_stream_info(inputFormatContext, NULL)) < 0) {
+
+logger("Could not open find stream info");// (error '%s')\ av_err2str(error));
+
+goto cleanup;
+
+}
+
+  
+
+/* Make sure that there is only one stream in the input file. */
+
+if (inputFormatContext->nb_streams > 1) {
+
+logger("Expected one audio input stream, but found more");//%d\n",
+
+// (*input_format_context)->nb_streams);
+
+goto cleanup;
+
+}
+
+// TODO: Loop through streams and extract index based on if (inputFormatContext->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+
+inputVideoStream = inputFormatContext->streams[0];// video stream - only 1 stream
+
+inputVideoStreamIndex = 0;
+
+  
+
+// Create codec and codec context to be used for decoding input
+
+AVCodec* inputVideoCodec = avcodec_find_decoder(inputVideoStream->codecpar->codec_id);
+
+if(!inputVideoCodec){
+
+printf("Cant find codec for encoder codec id %d\n",inputVideoStream->codecpar->codec_id);
+
+goto cleanup;
+
+}
+
+// create a codec context for input (decoder)
+
+AVCodecContext* inputVideoCodecContext = avcodec_alloc_context3(inputVideoCodec);
+
+if (!inputVideoCodecContext) {
+
+logger("failed to alloc memory for inputVideoCodecContext");
+
+goto cleanup;
+
+}
+
+// copy codec params from input stream to codec
+
+if (operationResult = avcodec_parameters_to_context(inputVideoCodecContext, inputVideoStream->codecpar) < 0) {
+
+logger("failed to fill inputVideoCodecContext ");
+
+goto cleanup;
+
+}
+
+// Avcodeccontext, avcodec,options-codec params
+
+if (operationResult=avcodec_open2(inputVideoCodecContext,inputVideoCodec, NULL) < 0) {
+
+logger("failed to open inputVideoCodecContext");
+
+goto cleanup;
+
+}
+
+  
+  
+
+// Create encoder with context for output
+
+// *format context, AVOutputformat, formatname, filename
+
+avformat_alloc_output_context2(&outputFormatContext, NULL, NULL, outputFile);
+
+if (!outputFormatContext) {
+
+logger("could not allocate memory for output format");
+
+goto cleanup;
+
+}
+
+  
+
+AVCodecContext* outputVideoCodecContext = NULL;
+
+if(transcodeVideo){
+
+// formatcontext,stream, frame
+
+AVRational inputFramerate = av_guess_frame_rate(inputFormatContext,inputVideoStream, NULL);
+
+// printf("input frame rate %d %d\n",inputFramerate.num, inputFramerate.den);
+
+  
+
+// create output stream
+
+outputVideoStream = avformat_new_stream(outputFormatContext, NULL);
+
+AVCodec* outputVideoCodec = avcodec_find_encoder_by_name(videoOuputCodecName);
+
+if(!outputVideoCodec){
+
+printf("Cant find codec by name %s\n",videoOuputCodecName);
+
+goto cleanup;
+
+}
+
+  
+
+outputVideoCodecContext = avcodec_alloc_context3(outputVideoCodec);
+
+if(!outputVideoCodecContext){
+
+logger("Cant allocate memory for outputVideoCodecContext");
+
+goto cleanup;
+
+}
+
+// set output codec options (encoder)
+
+av_opt_set(outputVideoCodecContext->priv_data, "preset", "ultrafast", 0);
+
+if (videoOutputCodecPrivateKey && videoOutputCodecPrivateValue)
+
+av_opt_set(outputVideoCodecContext->priv_data, videoOutputCodecPrivateKey, videoOutputCodecPrivateValue, 0);
+
+  
+
+// printf("wxh = %d x %d\n",inputVideoCodecContext->width,inputVideoCodecContext->height);
+
+  
+
+// Set outputcodec params from input
+
+outputVideoCodecContext->height = inputVideoCodecContext->height;
+
+outputVideoCodecContext->width = inputVideoCodecContext->width;
+
+outputVideoCodecContext->sample_aspect_ratio = inputVideoCodecContext->sample_aspect_ratio;
+
+if (outputVideoCodec->pix_fmts)
+
+outputVideoCodecContext->pix_fmt = outputVideoCodec->pix_fmts[0];
+
+else
+
+outputVideoCodecContext->pix_fmt = inputVideoCodecContext->pix_fmt;
+
+outputVideoCodecContext->bit_rate = 2 * 1000 * 1000;
+
+outputVideoCodecContext->rc_buffer_size = 4 * 1000 * 1000;
+
+outputVideoCodecContext->rc_max_rate = 2 * 1000 * 1000;
+
+outputVideoCodecContext->rc_min_rate = 2.5 * 1000 * 1000;
+
+  
+
+outputVideoCodecContext->time_base = av_inv_q(inputFramerate);
+
+outputVideoStream->time_base = outputVideoCodecContext->time_base;
+
+  
+
+if (avcodec_open2(outputVideoCodecContext, outputVideoCodec, NULL) < 0) {
+
+logger("could not open the codec outputVideoCodec");
+
+goto cleanup;
+
+}
+
+avcodec_parameters_from_context(outputVideoStream->codecpar, outputVideoCodecContext);
+
+  
+
+}// encode video stream
+
+else {
+
+//copy video stream
+
+outputVideoStream = avformat_new_stream(outputFormatContext, NULL);
+
+// copy codec params from input codec
+
+avcodec_parameters_copy((outputVideoStream)->codecpar, inputVideoStream->codecpar);
+
+}// copy video stream - dont encode
+
+  
+
+if (outputFormatContext->oformat->flags & AVFMT_GLOBALHEADER)
+
+outputFormatContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+  
+
+if (!(outputFormatContext->oformat->flags & AVFMT_NOFILE)) {
+
+if (avio_open(&outputFormatContext->pb, outputFile, AVIO_FLAG_WRITE) < 0) {
+
+logger("could not open the output file");
+
+goto cleanup;
+
+}
+
+}
+
+  
+
+AVDictionary* muxerOptions = NULL;
+
+if (muxerOptionsKey && muxerOptionaValue) {
+
+av_dict_set(&muxerOptions,muxerOptionsKey,muxerOptionaValue, 0);
+
+}
+
+// Write header to output file before writing frame/packet data
+
+if (avformat_write_header(outputFormatContext, &muxerOptions) < 0) {
+
+logger("an error occurred writing header to output file");
+
+goto cleanup;
+
+}
+
+  
+
+AVFrame *inputFrame = av_frame_alloc();
+
+if(!inputFrame){
+
+logger("Failed to allocate memory for input frame");
+
+goto cleanup;
+
+}
+
+AVPacket *inputPacket = av_packet_alloc();
+
+if (!inputPacket) {
+
+logger("failed to allocated memory for input packet");
+
+goto cleanup;
+
+}
+
+  
+
+while (av_read_frame(inputFormatContext, inputPacket) >= 0)
+
+{
+
+if (inputFormatContext->streams[inputPacket->stream_index]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+
+if(transcodeVideo){
+
+operationResult = avcodec_send_packet(inputVideoCodecContext, inputPacket);
+
+if(operationResult < 0){
+
+logger("Error while sending packet to decoder");
+
+goto cleanup;
+
+}
+
+while(operationResult >=0){
+
+operationResult = avcodec_receive_frame(inputVideoCodecContext, inputFrame);
+
+if (operationResult == AVERROR(EAGAIN) || operationResult == AVERROR_EOF) {
+
+break;
+
+}
+
+else  if (operationResult < 0) {
+
+logger("Error while receiving frame from decoder");//, av_err2str(response));
+
+goto cleanup;
+
+}
+
+if (operationResult >= 0) {
+
+if(operationResult=encode_video(inputVideoStreamIndex,inputVideoStream,outputFormatContext,outputVideoStream,outputVideoCodecContext,inputFrame)) break;
+
+}// if avcodec_receive_frame
+
+av_frame_unref(inputFrame);
+
+}// while operationResult > = 0
+
+av_packet_unref(inputPacket);
+
+}// if transcodeVideo
+
+else{
+
+av_packet_rescale_ts(inputPacket, inputVideoStream->time_base, outputVideoStream->time_base);
+
+if (operationResult=av_interleaved_write_frame(outputFormatContext, inputPacket) < 0) {
+
+logger("error while copying stream packet");
+
+goto cleanup;
+
+}
+
+}// no transcodeVideo
+
+}
+
+}// while av_read_frame
+
+  
+
+// TODO: should I also flush the audio encoder?
+
+if(operationResult=encode_video(inputVideoStreamIndex,inputVideoStream,outputFormatContext,outputVideoStream,outputVideoCodecContext,NULL)){
+
+logger("Error trying to flush video enoder");
+
+goto cleanup;
+
+}
+
+  
+
+av_write_trailer(outputFormatContext);
+
+  
+  
+
+goto cleanup;
+
+cleanup:
+
+if(inputFormatContext)
+
+avformat_close_input(&inputFormatContext);
+
+if(muxerOptions)
+
+av_dict_free(&muxerOptions);
+
+if(inputFrame)
+
+av_frame_free(&inputFrame);
+
+if(inputPacket)
+
+av_packet_free(&inputPacket);
+
+  
+
+if(inputFormatContext){
+
+avformat_close_input(&inputFormatContext);
+
+avformat_free_context(inputFormatContext);
+
+inputFormatContext = NULL;
+
+}
+
+if(outputFormatContext){
+
+avformat_free_context(outputFormatContext);
+
+outputFormatContext = NULL;
+
+}
+
+if(inputVideoCodecContext){
+
+avcodec_free_context(&inputVideoCodecContext);
+
+inputVideoCodecContext = NULL;
+
+}
+
+return operationResult <0 ? operationResult: AVERROR_EXIT;
+
+}//main
+```
 
 ## For Constant frame rate
 
@@ -2101,9 +3227,9 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 *Source - Stackoverflow*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTQ5Mjk1NDA3LDkxMTM5MjI4MCwtMjczMj
-Q5OTA3LDEyMDg0NzA2MDUsNDUwNTA5MzY0LC01ODE2MTE0NTgs
-LTE5NTMwOTM4OTYsLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLT
-E5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4
-NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbLTk0ODIwMzU5Nyw5MTEzOTIyODAsLTI3Mz
+I0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4
+LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC
+0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgx
+ODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
