@@ -510,44 +510,26 @@ Now on running the muxing program, the video duration is as expected
 /*
 
 // Audio transcoding to aac
-
+// Code from ffmpeg7.0 examples rehashed and rewritten some parts for my understanding
 
 * Copyright (c) 2013-2022 Andreas Unterweger
-
 *
-
 * This file is part of FFmpeg.
-
 *
-
 * FFmpeg is free software; you can redistribute it and/or
-
 * modify it under the terms of the GNU Lesser General Public
-
 * License as published by the Free Software Foundation; either
-
 * version 2.1 of the License, or (at your option) any later version.
-
 *
-
 * FFmpeg is distributed in the hope that it will be useful,
-
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-
 * Lesser General Public License for more details.
-
 *
-
 * You should have received a copy of the GNU Lesser General Public
-
 * License along with FFmpeg; if not, write to the Free Software
-
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-
 */
-
 /**
 
 * @file audio transcoding to MPEG/AAC API usage example
@@ -3230,9 +3212,9 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 *Source - Stackoverflow*
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTcxMjg3NzU5LDkxMTM5MjI4MCwtMjczMj
-Q5OTA3LDEyMDg0NzA2MDUsNDUwNTA5MzY0LC01ODE2MTE0NTgs
-LTE5NTMwOTM4OTYsLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLT
-E5NTYyNzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4
-NzUsMTA1NzkzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbMTQ0OTMwMjg2Myw5MTEzOTIyODAsLTI3Mz
+I0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4
+LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC
+0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgx
+ODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
 -->
