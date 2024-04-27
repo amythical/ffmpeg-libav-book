@@ -28,8 +28,9 @@ The documentation is good as an API doc, but it doesn't explain concepts to a ne
 I was stumped when I started and struggled for even small things.
 
 https://github.com/leandromoreira/ffmpeg-libav-tutorial
-is an excellent resource. It helped me understand the concepts and use of the data structures in libav.
-Still I had my own path and I found myself struggling to put together the code needed for my functionality from stackoverflow, ffmpeg mailing lists, the ffmpeg source code.
+is an excellent resource and a recommended read for starting. It helped me understand the concepts and use of the data structures in libav. 
+
+Still I had my own path and I found myself struggling to put together code which ran without Seg faults and did what I  needed. Somehow I managed to cobble code from various sources from stackoverflow, ffmpeg mailing lists, the ffmpeg source code.
 I am creating the book I wish I had when I started on this journey.
 
 #	Concepts 
@@ -3260,10 +3261,10 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4NTc0MDM5LDE2OTcwOTA5MTEsNjY5Mz
-g4NDksLTQ4OTQzOTcyNCw5MTEzOTIyODAsLTI3MzI0OTkwNywx
-MjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4LC0xOTUzMD
-kzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2
-ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1LDEwNT
-c5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbLTE0Njk1MDM0MywxNjk3MDkwOTExLDY2OT
+M4ODQ5LC00ODk0Mzk3MjQsOTExMzkyMjgwLC0yNzMyNDk5MDcs
+MTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1Mz
+A5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3
+Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMD
+U3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
