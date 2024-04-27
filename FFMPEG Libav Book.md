@@ -8,11 +8,13 @@ TOC
 * Hello World
 * Trimming 
 * Muxing mov to mp4
-* Transcode video
+* Transcode video (mov to mp4)
 * Transcode FPS
-* Transcode audio
+* Transcode audio (aac to aac)
 * Transcode audio and video together
-* Transcode audio with buffer for samp
+* Transcode audio with buffer for sampling
+* Transcode audio scl16 format to aac
+* Transcode video 
 * 
 # Motivation
 April 2024
@@ -3250,7 +3252,7 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYyNzE3NjI0MCw2NjkzODg0OSwtNDg5ND
+eyJoaXN0b3J5IjpbMTQwMDgxMzQ2Niw2NjkzODg0OSwtNDg5ND
 M5NzI0LDkxMTM5MjI4MCwtMjczMjQ5OTA3LDEyMDg0NzA2MDUs
 NDUwNTA5MzY0LC01ODE2MTE0NTgsLTE5NTMwOTM4OTYsLTE0ND
 gwOTA0NjgsLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0
