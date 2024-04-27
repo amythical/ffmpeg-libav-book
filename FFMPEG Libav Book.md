@@ -3230,10 +3230,16 @@ gcc -g -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -
 What you're looking for is fixed gop and fps! to achieve that just set stream  `avg_frame_rate`  and  `tune`  to  `zerolatency`, that's all.
 *Source - Stackoverflow*
 
+# Nice to know
+-   **tbn**  = the time base in AVStream that has come from the container
+-   **tbc**  = the time base in AVCodecContext for the codec used for a particular stream
+-   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ4OTQzOTcyNCw5MTEzOTIyODAsLTI3Mz
-I0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4
-LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC
-0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgx
-ODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbNjY5Mzg4NDksLTQ4OTQzOTcyNCw5MTEzOT
+IyODAsLTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwt
+NTgxNjExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xOD
+cwNjAwMjkzLC0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3
+NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ
+==
 -->
