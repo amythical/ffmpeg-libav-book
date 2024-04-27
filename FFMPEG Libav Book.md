@@ -34,9 +34,9 @@ Still I had my own path and I found myself struggling to put together code which
 
 I am creating the book I wish I had when I started on this journey.
 
-Comments to improve this are much appreciated.
-amythical@gmail.com
-X @amythical
+Comments  to improve this or a shoutout if you find this useful are appreciated.
+Email - amythical@gmail.com
+Twitter/X  - @amythical
 
 #	Concepts 
 Thanks to https://github.com/leandromoreira/ffmpeg-libav-tutorial
@@ -3266,10 +3266,10 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyNjM2MDcyMzYsMTY5NzA5MDkxMSw2Nj
-kzODg0OSwtNDg5NDM5NzI0LDkxMTM5MjI4MCwtMjczMjQ5OTA3
-LDEyMDg0NzA2MDUsNDUwNTA5MzY0LC01ODE2MTE0NTgsLTE5NT
-MwOTM4OTYsLTE0NDgwOTA0NjgsLTE4NzA2MDAyOTMsLTE5NTYy
-NzY4NCwxMDg4NjI0OTE0LC05NDg2OTc3LC0yMDM1ODE4NzUsMT
-A1NzkzNDY2NSwtMTgyODUxMTM5M119
+eyJoaXN0b3J5IjpbLTYwNjkzMjMyOSwxNjk3MDkwOTExLDY2OT
+M4ODQ5LC00ODk0Mzk3MjQsOTExMzkyMjgwLC0yNzMyNDk5MDcs
+MTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1Mz
+A5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3
+Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMD
+U3OTM0NjY1LC0xODI4NTExMzkzXX0=
 -->
