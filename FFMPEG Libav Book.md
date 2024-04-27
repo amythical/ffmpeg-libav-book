@@ -49,7 +49,7 @@ Thanks to https://github.com/leandromoreira/ffmpeg-libav-tutorial
 ## Environment
 * Mac M1 Sonoma
 * Docker Desktop client
-* OS Debain
+* Docker Container OS Debian
 
 ### Debian Docker instance
 Pull a docker debian instance, 'unstable-slim' is the  debian image I searched and got on the docker repos
@@ -3266,7 +3266,7 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI3ODg3OTQ0NywtNjA2OTMyMzI5LDE2OT
+eyJoaXN0b3J5IjpbMTk1ODcyNjQzNiwtNjA2OTMyMzI5LDE2OT
 cwOTA5MTEsNjY5Mzg4NDksLTQ4OTQzOTcyNCw5MTEzOTIyODAs
 LTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNj
 ExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAw
