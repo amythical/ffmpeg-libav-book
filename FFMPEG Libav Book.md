@@ -25,7 +25,7 @@ TOC - TODO
 April 2024
 I am not new to FFMPEG as a user, but I am new to using ffmpeg as a developer with its libav C libraries. 
 The official documentation is good as an API doc, but it doesn't explain concepts to a newbie. The examples too don't run out of the box on all files.
-I was stumped when I started and struggled for a couple of weeks until I was slightly comfortable and able to make sense of what was happening in the code.
+I was stumped when I started and struggled for a week or more until I was a bit comfortable and able to make sense of what was happening in the code.
 
 https://github.com/leandromoreira/ffmpeg-libav-tutorial
 is an excellent resource and a recommended read for starting. It helped me understand the concepts and use of the data structures in libav. 
@@ -3266,7 +3266,7 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTczNDA5OTM0NSwtNjA2OTMyMzI5LDE2OT
+eyJoaXN0b3J5IjpbMTI3ODg3OTQ0NywtNjA2OTMyMzI5LDE2OT
 cwOTA5MTEsNjY5Mzg4NDksLTQ4OTQzOTcyNCw5MTEzOTIyODAs
 LTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNj
 ExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAw
