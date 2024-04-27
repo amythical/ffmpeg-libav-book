@@ -1,5 +1,8 @@
 # FFMPEG Libav Book
 
+TOC
+* Motivation
+* 
 # Motivation
 April 2024
 I am not new to FFMPEG, but new using the libav C libraries. The documentation is great but it doesn't explain concepts to a newbie.
@@ -3236,10 +3239,10 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjY5Mzg4NDksLTQ4OTQzOTcyNCw5MTEzOT
-IyODAsLTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwt
-NTgxNjExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xOD
-cwNjAwMjkzLC0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3
-NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ
-==
+eyJoaXN0b3J5IjpbOTc5NDQyMTUxLDY2OTM4ODQ5LC00ODk0Mz
+k3MjQsOTExMzkyMjgwLC0yNzMyNDk5MDcsMTIwODQ3MDYwNSw0
+NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1MzA5Mzg5NiwtMTQ0OD
+A5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3Njg0LDEwODg2MjQ5
+MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OTM0NjY1LC0xOD
+I4NTExMzkzXX0=
 -->
