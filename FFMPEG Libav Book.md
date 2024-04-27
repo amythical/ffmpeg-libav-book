@@ -6,6 +6,7 @@ TOC - TODO
 * Concepts
 * Setup
 * Hello World
+* Makefile
 * Trimming 
 * Muxing mov to mp4
 * Transcode video (mov to mp4)
@@ -3256,10 +3257,10 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMDQ4Mzg2NzEsNjY5Mzg4NDksLTQ4OT
-QzOTcyNCw5MTEzOTIyODAsLTI3MzI0OTkwNywxMjA4NDcwNjA1
-LDQ1MDUwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkzODk2LC0xND
-Q4MDkwNDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2ODQsMTA4ODYy
-NDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2NjUsLT
-E4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbMTY5NzA5MDkxMSw2NjkzODg0OSwtNDg5ND
+M5NzI0LDkxMTM5MjI4MCwtMjczMjQ5OTA3LDEyMDg0NzA2MDUs
+NDUwNTA5MzY0LC01ODE2MTE0NTgsLTE5NTMwOTM4OTYsLTE0ND
+gwOTA0NjgsLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0
+OTE0LC05NDg2OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2NSwtMT
+gyODUxMTM5M119
 -->
