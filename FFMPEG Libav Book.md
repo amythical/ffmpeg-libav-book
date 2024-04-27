@@ -1,6 +1,6 @@
 # FFMPEG Libav Book
 
-TOC
+TOC - TODO
 * Motivation
 * Thanks
 * Concepts
@@ -12,9 +12,12 @@ TOC
 * Transcode FPS
 * Transcode audio (aac to aac)
 * Transcode audio and video together
+* Dropping streams
 * Transcode audio with buffer for sampling
 * Transcode audio scl16 format to aac
-* Transcode video 
+* Transcode video webm to mp4
+* Transcode gif to mp4
+* Complex filters
 * 
 # Motivation
 April 2024
@@ -3252,10 +3255,10 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQwMDgxMzQ2Niw2NjkzODg0OSwtNDg5ND
-M5NzI0LDkxMTM5MjI4MCwtMjczMjQ5OTA3LDEyMDg0NzA2MDUs
-NDUwNTA5MzY0LC01ODE2MTE0NTgsLTE5NTMwOTM4OTYsLTE0ND
-gwOTA0NjgsLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0
-OTE0LC05NDg2OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2NSwtMT
-gyODUxMTM5M119
+eyJoaXN0b3J5IjpbMzQ3MjM1NDc0LDY2OTM4ODQ5LC00ODk0Mz
+k3MjQsOTExMzkyMjgwLC0yNzMyNDk5MDcsMTIwODQ3MDYwNSw0
+NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1MzA5Mzg5NiwtMTQ0OD
+A5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3Njg0LDEwODg2MjQ5
+MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OTM0NjY1LC0xOD
+I4NTExMzkzXX0=
 -->
