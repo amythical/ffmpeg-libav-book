@@ -3265,11 +3265,14 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbc**  = the time base in AVCodecContext for the codec used for a particular stream
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
+# Transrate Video (Change FPS)
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk1ODcyNjQzNiwtNjA2OTMyMzI5LDE2OT
-cwOTA5MTEsNjY5Mzg4NDksLTQ4OTQzOTcyNCw5MTEzOTIyODAs
-LTI3MzI0OTkwNywxMjA4NDcwNjA1LDQ1MDUwOTM2NCwtNTgxNj
-ExNDU4LC0xOTUzMDkzODk2LC0xNDQ4MDkwNDY4LC0xODcwNjAw
-MjkzLC0xOTU2Mjc2ODQsMTA4ODYyNDkxNCwtOTQ4Njk3NywtMj
-AzNTgxODc1LDEwNTc5MzQ2NjUsLTE4Mjg1MTEzOTNdfQ==
+eyJoaXN0b3J5IjpbMTUzMzY2MTY2MiwxOTU4NzI2NDM2LC02MD
+Y5MzIzMjksMTY5NzA5MDkxMSw2NjkzODg0OSwtNDg5NDM5NzI0
+LDkxMTM5MjI4MCwtMjczMjQ5OTA3LDEyMDg0NzA2MDUsNDUwNT
+A5MzY0LC01ODE2MTE0NTgsLTE5NTMwOTM4OTYsLTE0NDgwOTA0
+NjgsLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0OTE0LC
+05NDg2OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2NSwtMTgyODUx
+MTM5M119
 -->
