@@ -3266,13 +3266,14 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 -   **tbr**  = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
 
 # Transrate Video (Change FPS)
+Reference - https://video.stackexchange.com/questions/27554/call-ffmpeg-filter-from-source-code-c-api
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUzMzY2MTY2MiwxOTU4NzI2NDM2LC02MD
-Y5MzIzMjksMTY5NzA5MDkxMSw2NjkzODg0OSwtNDg5NDM5NzI0
-LDkxMTM5MjI4MCwtMjczMjQ5OTA3LDEyMDg0NzA2MDUsNDUwNT
-A5MzY0LC01ODE2MTE0NTgsLTE5NTMwOTM4OTYsLTE0NDgwOTA0
-NjgsLTE4NzA2MDAyOTMsLTE5NTYyNzY4NCwxMDg4NjI0OTE0LC
-05NDg2OTc3LC0yMDM1ODE4NzUsMTA1NzkzNDY2NSwtMTgyODUx
-MTM5M119
+eyJoaXN0b3J5IjpbODc2Mzc0OTE4LDE1MzM2NjE2NjIsMTk1OD
+cyNjQzNiwtNjA2OTMyMzI5LDE2OTcwOTA5MTEsNjY5Mzg4NDks
+LTQ4OTQzOTcyNCw5MTEzOTIyODAsLTI3MzI0OTkwNywxMjA4ND
+cwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkzODk2
+LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2ODQsMT
+A4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2
+NjVdfQ==
 -->
