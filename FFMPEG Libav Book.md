@@ -2108,6 +2108,10 @@ audiotranscode: audiotranscode.c
 
 gcc -I/root/ffmpeg_build/include -L/root/ffmpeg_build/lib $^ -o $@ -lavutil -lavformat -lavcodec -lz -lavutil -lm -lX11 -lvdpau -lva -lgnutls -lz -lx264 -lbz2 -lmp3lame -ldrm -lswresample -lva-x11 -lva-drm -lvorbis -lvpx -lfdk-aac -lavfilter -lswscale -lpostproc -lass -lfreetype -lavutil -lavcodec
 ```
+
+## Install fdk-aac
+https://trac.ffmpeg.org/wiki/CompilationGuide/Centos
+
 # Transcode Video
 ```
 // Video transcoding code
@@ -3280,11 +3284,11 @@ Reference - https://video.stackexchange.com/questions/27554/call-ffmpeg-filter-f
 
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ2NjY3ODU2MSwxNTMzNjYxNjYyLDE5NT
-g3MjY0MzYsLTYwNjkzMjMyOSwxNjk3MDkwOTExLDY2OTM4ODQ5
-LC00ODk0Mzk3MjQsOTExMzkyMjgwLC0yNzMyNDk5MDcsMTIwOD
-Q3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1MzA5Mzg5
-NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3Njg0LD
-EwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OTM0
-NjY1XX0=
+eyJoaXN0b3J5IjpbLTE2NjY1MzMwNTcsMTQ2NjY3ODU2MSwxNT
+MzNjYxNjYyLDE5NTg3MjY0MzYsLTYwNjkzMjMyOSwxNjk3MDkw
+OTExLDY2OTM4ODQ5LC00ODk0Mzk3MjQsOTExMzkyMjgwLC0yNz
+MyNDk5MDcsMTIwODQ3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1
+OCwtMTk1MzA5Mzg5NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5My
+wtMTk1NjI3Njg0LDEwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4
+MTg3NV19
 -->
