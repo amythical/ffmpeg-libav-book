@@ -3268,12 +3268,23 @@ What you're looking for is fixed gop and fps! to achieve that just set stream  `
 # Transrate Video (Change FPS)
 Reference - https://video.stackexchange.com/questions/27554/call-ffmpeg-filter-from-source-code-c-api
 
+## Steps
+* Initiate filter graph
+* Build buffer and buffersink
+* Create filter
+* Send frames to filter
+* Get result from filter
+* Free everything
+
+```
+
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODc2Mzc0OTE4LDE1MzM2NjE2NjIsMTk1OD
-cyNjQzNiwtNjA2OTMyMzI5LDE2OTcwOTA5MTEsNjY5Mzg4NDks
-LTQ4OTQzOTcyNCw5MTEzOTIyODAsLTI3MzI0OTkwNywxMjA4ND
-cwNjA1LDQ1MDUwOTM2NCwtNTgxNjExNDU4LC0xOTUzMDkzODk2
-LC0xNDQ4MDkwNDY4LC0xODcwNjAwMjkzLC0xOTU2Mjc2ODQsMT
-A4ODYyNDkxNCwtOTQ4Njk3NywtMjAzNTgxODc1LDEwNTc5MzQ2
-NjVdfQ==
+eyJoaXN0b3J5IjpbMTQ2NjY3ODU2MSwxNTMzNjYxNjYyLDE5NT
+g3MjY0MzYsLTYwNjkzMjMyOSwxNjk3MDkwOTExLDY2OTM4ODQ5
+LC00ODk0Mzk3MjQsOTExMzkyMjgwLC0yNzMyNDk5MDcsMTIwOD
+Q3MDYwNSw0NTA1MDkzNjQsLTU4MTYxMTQ1OCwtMTk1MzA5Mzg5
+NiwtMTQ0ODA5MDQ2OCwtMTg3MDYwMDI5MywtMTk1NjI3Njg0LD
+EwODg2MjQ5MTQsLTk0ODY5NzcsLTIwMzU4MTg3NSwxMDU3OTM0
+NjY1XX0=
 -->
